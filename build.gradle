@@ -25,3 +25,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// Define versions in a single place
+ext {
+
+    guavaVersion = '18.0'
+
+}

@@ -1,5 +1,6 @@
 package pe.warrenth.mymvvmsample;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pe.warrenth.mymvvmsample.databinding.FragmentMainBinding;
+
 
 public class MainFragment extends Fragment {
 
@@ -44,7 +46,7 @@ public class MainFragment extends Fragment {
         //자동으로 Binding 클래스 생성.  (xml 이름 + Binding)
         mFragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false);
 
-        //xml에 정의된 view, viewmodel 에 주입.
+        //xml에 정의된 view, viewmodel 에 주입. 자동생성된 함수.
         mFragmentMainBinding.setView(this);
         mFragmentMainBinding.setViewmodel(mViewModel);
 
@@ -95,21 +97,41 @@ public class MainFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 0;
+            return mTasks != null  ? mTasks.size() : 0;
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
+        public Task getItem(int i) {
+            return mTasks.get(i);
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
+            /*Task task = getItem(i);
+            MainItemBinding binding;
+            if( view == null) {
+                binding = MainItemBinding.inflate(
+                        LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+            } else  {
+                binding = DataBindingUtil.getBinding(view);
+            }
+
+            final MainItemViewModel viewModel = new MainItemViewModel(
+                    mTasksRepository,
+                    viewGroup.getContext().getApplicationContext()
+            );
+
+            binding.setViewmodel(viewModel);
+
+            viewModel.setTask(task);
+
+            return binding.getRoot();*/
             return null;
         }
 
