@@ -30,4 +30,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
+
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
 }

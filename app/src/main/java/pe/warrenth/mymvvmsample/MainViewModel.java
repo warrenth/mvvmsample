@@ -16,10 +16,11 @@ public class MainViewModel extends BaseObservable {
     //XML 과 바인딩되어있는 객체들이다.
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);  // swipeRefreshLayout의 refreshing와 연결.
 
+    //ListView와 연결된
+    public final ObservableList<Task> items = new ObservableArrayList<>();
+
     private final ObservableField<Task> mTaskObservable = new ObservableField<>();
 
-    // These observable fields will update Views automatically
-    public final ObservableList<Task> items = new ObservableArrayList<>();
 
 
     private Context mContext; // To avoid leaks, this must be an Application Context.
@@ -48,6 +49,7 @@ public class MainViewModel extends BaseObservable {
             public void onDataLoaded(List<Task> tasks) {
 
                 items.addAll(tasks);
+                notifyPropertyChanged(BR.empty);
                 dataLoading.set(false);
             }
         });
@@ -65,5 +67,10 @@ public class MainViewModel extends BaseObservable {
 
     public void setTask(Task task) {
         mTaskObservable.set(task);
+    }
+
+    @Bindable
+    public boolean isEmpty() {
+        return items.isEmpty();
     }
 }

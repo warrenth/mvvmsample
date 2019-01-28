@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pe.warrenth.mymvvmsample.databinding.FragmentMainBinding;
+import pe.warrenth.mymvvmsample.databinding.MainItemBinding;
 
 
 public class MainFragment extends Fragment {
@@ -113,7 +114,7 @@ public class MainFragment extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            /*Task task = getItem(i);
+            Task task = getItem(i);
             MainItemBinding binding;
             if( view == null) {
                 binding = MainItemBinding.inflate(
@@ -131,12 +132,16 @@ public class MainFragment extends Fragment {
 
             viewModel.setTask(task);
 
-            return binding.getRoot();*/
-            return null;
+            return binding.getRoot();
         }
 
         public void onDestory() {
             //interface를 null 한다.
+        }
+
+        public void replaceData(List<Task> items) {
+            mTasks = items;
+            notifyDataSetChanged();
         }
     }
 }
