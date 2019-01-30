@@ -31,6 +31,6 @@ public class MainLocalDataSource implements MainDataSource {
 
                 callback.onDataLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
             }
-        },3000);
+        },1500);
     }
 }
