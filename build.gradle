@@ -28,8 +28,13 @@ task clean(type: Delete) {
 
 // Define versions in a single place
 ext {
+    minSdkVersion = 15
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.1'
+
+    // App dependencies
+    supportLibraryVersion = '28.0.0'
 
     guavaVersion = '18.0'
-    // App dependencies
-    supportLibraryVersion = '26.1.0'
 }

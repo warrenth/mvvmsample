@@ -1,9 +1,8 @@
-package pe.warrenth.mymvvmsample;
+package pe.warrenth.mymvvmsample.data;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
+import pe.warrenth.mymvvmsample.Task;
 
 
 /**
@@ -19,26 +18,26 @@ import java.util.Map;
  *           2. UseCase 는 도메인 레이어로 비지니스 로직을 담당.
  *
  */
-public class MainRepository implements MainDataSource {
+public class TodoRepository implements TodoDataSource {
 
-    private static MainRepository INSTANCE = null;
+    private static TodoRepository INSTANCE = null;
 
-    private final MainDataSource mMainDataSource;
+    private final TodoDataSource mTodoDataSource;
 
-    private MainRepository(MainDataSource mainDataSource) {
-        mMainDataSource = mainDataSource;
+    private TodoRepository(TodoDataSource todoDataSource) {
+        mTodoDataSource = todoDataSource;
     }
 
-    public static MainRepository getInstance(MainDataSource mainDataSource) {
+    public static TodoRepository getInstance(TodoDataSource todoDataSource) {
         if(INSTANCE == null) {
-            INSTANCE = new MainRepository(mainDataSource);
+            INSTANCE = new TodoRepository(todoDataSource);
         }
         return INSTANCE;
     }
 
     @Override
     public void getData(final LoadDataCallback callback) {
-        mMainDataSource.getData(new LoadDataCallback() {
+        mTodoDataSource.getData(new LoadDataCallback() {
             @Override
             public void onDataLoaded(List<Task> tasks) {
                 //refreshCache(tasks);

@@ -1,12 +1,11 @@
-package pe.warrenth.mymvvmsample;
+package pe.warrenth.mymvvmsample.todolist;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +15,32 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.warrenth.mymvvmsample.databinding.FragmentMainBinding;
-import pe.warrenth.mymvvmsample.databinding.MainItemBinding;
+import pe.warrenth.mymvvmsample.R;
+import pe.warrenth.mymvvmsample.Task;
+import pe.warrenth.mymvvmsample.data.TodoRepository;
+import pe.warrenth.mymvvmsample.data.remote.TodoRemoteDataSource;
+import pe.warrenth.mymvvmsample.databinding.FragmentTodoListBinding;
+import pe.warrenth.mymvvmsample.databinding.TodoListItemBinding;
 
 
-public class MainFragment extends Fragment {
+public class TodoFragment extends Fragment {
 
-    private MainViewModel mViewModel;
+    private TodoViewModel mViewModel;
 
-    private FragmentMainBinding mFragmentMainBinding;
+    private FragmentTodoListBinding mFragmentTodoBinding;
 
     private MainListAdapter mListAdapter;
 
-    public static MainFragment newInstance() {
+    public static TodoFragment newInstance() {
         
         Bundle args = new Bundle();
         
-        MainFragment fragment = new MainFragment();
+        TodoFragment fragment = new TodoFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void setViewModel(MainViewModel viewModel) {
+    public void setViewModel(TodoViewModel viewModel) {
         mViewModel = viewModel;
     }
 
@@ -45,13 +48,14 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //자동으로 Binding 클래스 생성.  (xml 이름 + Binding)
-        mFragmentMainBinding = FragmentMainBinding.inflate(inflater, container, false);
+
+        mFragmentTodoBinding = FragmentTodoListBinding.inflate(inflater, container, false);
 
         //xml에 정의된 view, viewmodel 에 주입. 자동생성된 함수.
-        mFragmentMainBinding.setView(this);
-        mFragmentMainBinding.setViewmodel(mViewModel);
+        mFragmentTodoBinding.setView(this);
+        mFragmentTodoBinding.setViewmodel(mViewModel);
 
-        return mFragmentMainBinding.getRoot();
+        return mFragmentTodoBinding.getRoot();
     }
 
     @Override
@@ -64,16 +68,28 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        setupFab();
         setupListAdapter();
     }
 
+    private void setupFab() {
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.addTodo();
+            }
+        });
+    }
+
     private void setupListAdapter() {
-        ListView listView =  mFragmentMainBinding.tasksList;
+        ListView listView =  mFragmentTodoBinding.tasksList;
 
         mListAdapter = new MainListAdapter(
                 new ArrayList<Task>(0),
-                MainRepository.getInstance(MainRemoteDataSource.getInstance()),
-                mViewModel);
+                TodoRepository.getInstance(TodoRemoteDataSource.getInstance()),
+                mViewModel,
+                (TodoListNavigator) getActivity());
         listView.setAdapter(mListAdapter);
     }
 
@@ -85,15 +101,17 @@ public class MainFragment extends Fragment {
 
     public static class MainListAdapter extends BaseAdapter {
 
-        private final MainViewModel mMainViewModel;
+        private final TodoViewModel mMainViewModel;
         private List<Task> mTasks;
-        private MainRepository mTasksRepository;
+        private TodoRepository mTasksRepository;
+        private TodoListNavigator mTodoListNavigator;
 
-
-        public MainListAdapter(ArrayList<Task> tasks, MainRepository repository, MainViewModel viewModel) {
+        public MainListAdapter(ArrayList<Task> tasks, TodoRepository repository,
+                               TodoViewModel viewModel, TodoListNavigator todoListNavigator) {
             mTasks = tasks;
             mTasksRepository = repository;
             mMainViewModel = viewModel;
+            mTodoListNavigator = todoListNavigator;
         }
 
         @Override
@@ -115,18 +133,20 @@ public class MainFragment extends Fragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
 
             Task task = getItem(i);
-            MainItemBinding binding;
+            TodoListItemBinding binding;
             if( view == null) {
-                binding = MainItemBinding.inflate(
+                binding = TodoListItemBinding.inflate(
                         LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
             } else  {
                 binding = DataBindingUtil.getBinding(view);
             }
 
-            final MainItemViewModel viewModel = new MainItemViewModel(
+            final TodoItemViewModel viewModel = new TodoItemViewModel(
                     mTasksRepository,
                     viewGroup.getContext().getApplicationContext()
             );
+
+            viewModel.setNavigator(mTodoListNavigator);
 
             binding.setViewmodel(viewModel);
 
@@ -137,6 +157,7 @@ public class MainFragment extends Fragment {
 
         public void onDestory() {
             //interface를 null 한다.
+            mTodoListNavigator = null;
         }
 
         public void replaceData(List<Task> items) {

@@ -8,11 +8,11 @@
 
         <variable
             name="view"
-            type="pe.warrenth.mymvvmsample.MainFragment" />
+            type="pe.warrenth.mymvvmsample.todolist.TodoFragment" />
 
         <variable
             name="viewmodel"
-            type="pe.warrenth.mymvvmsample.MainViewModel" />
+            type="pe.warrenth.mymvvmsample.todolist.TodoViewModel" />
 
     </data>
 

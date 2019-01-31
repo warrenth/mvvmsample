@@ -6,19 +6,22 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import pe.warrenth.mymvvmsample.todolist.TodoFragment;
+import pe.warrenth.mymvvmsample.todolist.TodoViewModel;
+
 public class TasksListBindings {
 
     @SuppressWarnings("unchecked")
     @BindingAdapter("app:items")
     public static void setItems(ListView listView, List<Task> items) {
-        MainFragment.MainListAdapter adapter = (MainFragment.MainListAdapter) listView.getAdapter();
+        TodoFragment.MainListAdapter adapter = (TodoFragment.MainListAdapter) listView.getAdapter();
         if (adapter != null) {
             adapter.replaceData(items);
         }
     }
 
     @BindingAdapter("android:onRefresh")
-    public static void setRefreshLayout(SwipeRefreshLayout view, final MainViewModel viewModel) {
+    public static void setRefreshLayout(SwipeRefreshLayout view, final TodoViewModel viewModel) {
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

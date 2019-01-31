@@ -1,8 +1,10 @@
-package pe.warrenth.mymvvmsample;
+package pe.warrenth.mymvvmsample.data;
 
 import java.util.List;
 
-public interface MainDataSource {
+import pe.warrenth.mymvvmsample.Task;
+
+public interface TodoDataSource {
 
     interface LoadDataCallback {
         void onDataLoaded(List<Task> tasks);

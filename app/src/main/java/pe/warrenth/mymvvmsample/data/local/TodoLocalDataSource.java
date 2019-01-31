@@ -1,4 +1,4 @@
-package pe.warrenth.mymvvmsample;
+package pe.warrenth.mymvvmsample.data.local;
 
 import android.os.Handler;
 
@@ -7,15 +7,18 @@ import com.google.common.collect.Lists;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MainLocalDataSource implements MainDataSource {
+import pe.warrenth.mymvvmsample.Task;
+import pe.warrenth.mymvvmsample.data.TodoDataSource;
 
-    private static MainLocalDataSource INSTANCE;
+public class TodoLocalDataSource implements TodoDataSource {
+
+    private static TodoLocalDataSource INSTANCE;
 
     private static final Map<String, Task> TASKS_SERVICE_DATA = new LinkedHashMap<>();
 
-    public static MainLocalDataSource getInstance() {
+    public static TodoLocalDataSource getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MainLocalDataSource();
+            INSTANCE = new TodoLocalDataSource();
         }
         return INSTANCE;
     }

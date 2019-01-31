@@ -7,12 +7,13 @@
     <data>
         <variable
             name="viewmodel"
-            type="pe.warrenth.mymvvmsample.MainItemViewModel"/>
+            type="pe.warrenth.mymvvmsample.todolist.TodoItemViewModel"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:onClick="@{() -> viewmodel.todoItemClicked()}">
 
         <TextView
             android:id="@+id/text_title"

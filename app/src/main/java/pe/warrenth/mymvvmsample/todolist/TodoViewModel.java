@@ -1,4 +1,4 @@
-package pe.warrenth.mymvvmsample;
+package pe.warrenth.mymvvmsample.todolist;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -10,7 +10,12 @@ import android.databinding.ObservableList;
 
 import java.util.List;
 
-public class MainViewModel extends BaseObservable {
+import pe.warrenth.mymvvmsample.BR;
+import pe.warrenth.mymvvmsample.Task;
+import pe.warrenth.mymvvmsample.data.TodoDataSource;
+import pe.warrenth.mymvvmsample.data.TodoRepository;
+
+public class TodoViewModel extends BaseObservable {
 
 
     //XML 과 바인딩되어있는 객체들이다.
@@ -21,15 +26,20 @@ public class MainViewModel extends BaseObservable {
 
     private final ObservableField<Task> mTaskObservable = new ObservableField<>();
 
-
-
     private Context mContext; // To avoid leaks, this must be an Application Context.
-    private final MainRepository mMainRepository;
 
+    private final TodoRepository mTodoRepository;
 
-    public MainViewModel(MainRepository repository, Context context) {
+    // MainAcitivity 에서 callback 받기 위한 listener
+    private TodoListNavigator mNavigator;
+
+    public TodoViewModel(TodoRepository repository, Context context) {
         mContext = context.getApplicationContext(); // Force use of Application Context.
-        mMainRepository = repository;
+        mTodoRepository = repository;
+    }
+
+    public void setNavigator(TodoListNavigator navigator) {
+        mNavigator = navigator;
     }
 
     public void onActivityDestroyed() {
@@ -44,7 +54,7 @@ public class MainViewModel extends BaseObservable {
     private void loadData() {
         dataLoading.set(true);
 
-        mMainRepository.getData(new MainDataSource.LoadDataCallback() {
+        mTodoRepository.getData(new TodoDataSource.LoadDataCallback() {
             @Override
             public void onDataLoaded(List<Task> tasks) {
 
@@ -72,5 +82,12 @@ public class MainViewModel extends BaseObservable {
     @Bindable
     public boolean isEmpty() {
         return items.isEmpty();
+    }
+
+
+    public void addTodo() {
+        if(mNavigator != null) {
+            mNavigator.addTodo();
+        }
     }
 }
