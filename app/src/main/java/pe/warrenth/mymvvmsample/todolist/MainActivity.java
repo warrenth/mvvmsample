@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //잔디테스트
 
         // Fragment와 ViewModel 을 각각 생성하여 FragmentManager에 각각 넣는다.
         TodoFragment todoFragment = findOrCreateViewFragment();
