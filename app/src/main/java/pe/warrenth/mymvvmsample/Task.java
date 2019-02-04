@@ -27,7 +27,6 @@ public final class Task {
     }
 
 
-
     @Nullable
     public String getTitleForList() {
         if (!Strings.isNullOrEmpty(mTitle)) {

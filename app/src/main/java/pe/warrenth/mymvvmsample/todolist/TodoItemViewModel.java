@@ -5,11 +5,10 @@ import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 
-import pe.warrenth.mymvvmsample.Task;
-import pe.warrenth.mymvvmsample.TasksViewModel;
+import pe.warrenth.mymvvmsample.TodoBaseViewModel;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 
-public class TodoItemViewModel  extends TasksViewModel{
+public class TodoItemViewModel extends TodoBaseViewModel {
 
     TodoRepository repository;
     Context context;
@@ -20,7 +19,7 @@ public class TodoItemViewModel  extends TasksViewModel{
     private WeakReference<TodoListNavigator> mNavigator;
 
     public TodoItemViewModel(TodoRepository repository, Context context) {
-
+        super(repository, context);
     }
 
 
@@ -35,8 +34,9 @@ public class TodoItemViewModel  extends TasksViewModel{
             return;
         }
         if (mNavigator != null && mNavigator.get() != null) {
-            mNavigator.get().openTaskDetails(taskId);
+           // mNavigator.get().openTaskDetails(taskId);
         }
     }
+
 
 }

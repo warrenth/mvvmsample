@@ -14,7 +14,7 @@ import pe.warrenth.mymvvmsample.tododetail.TodoDetailActivity;
 public class MainActivity extends AppCompatActivity implements TodoListNavigator {
 
     public static final String MAIN_VIEWMODEL_TAG = "MAIN_VIEWMODEL_TAG";
-    private TodoViewModel mViewModel;
+    private ToDoListViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,24 +22,24 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
         setContentView(R.layout.activity_main);
 
         // Fragment와 ViewModel 을 각각 생성하여 FragmentManager에 각각 넣는다.
-        TodoFragment todoFragment = findOrCreateViewFragment();
+        TodoListFragment todoListFragment = findOrCreateViewFragment();
 
         //Activity에서 ViewModel을 생성하고, 생성된걸 fragment에 넘김. 그리고 MainActivity와 listner(Navigator) 로 연결
         mViewModel = findOrCreateViewModel();
         mViewModel.setNavigator(this);
 
         // Fragment에 ViewModel 인스턴스를 넘긴다.
-        todoFragment.setViewModel(mViewModel);
+        todoListFragment.setViewModel(mViewModel);
     }
 
-    private TodoViewModel findOrCreateViewModel() {
-        ViewModelHolder<TodoViewModel> retainedViewModel =
-                (ViewModelHolder<TodoViewModel>) getSupportFragmentManager().findFragmentByTag(MAIN_VIEWMODEL_TAG);
+    private ToDoListViewModel findOrCreateViewModel() {
+        ViewModelHolder<ToDoListViewModel> retainedViewModel =
+                (ViewModelHolder<ToDoListViewModel>) getSupportFragmentManager().findFragmentByTag(MAIN_VIEWMODEL_TAG);
 
         if(retainedViewModel != null && retainedViewModel.getView() != null) {
             return retainedViewModel.getViewmodel();
         } else {
-            TodoViewModel viewModel = new TodoViewModel(
+            ToDoListViewModel viewModel = new ToDoListViewModel(
                     TodoRepository.getInstance(TodoLocalDataSource.getInstance()),
                     getApplicationContext());
 
@@ -52,15 +52,15 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
         }
     }
 
-    private TodoFragment findOrCreateViewFragment() {
-        TodoFragment todoFragment = (TodoFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+    private TodoListFragment findOrCreateViewFragment() {
+        TodoListFragment todoListFragment = (TodoListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
-        if(todoFragment == null) {
-            todoFragment = TodoFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), todoFragment, R.id.contentFrame);
+        if(todoListFragment == null) {
+            todoListFragment = TodoListFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), todoListFragment, R.id.contentFrame);
         }
 
-        return todoFragment;
+        return todoListFragment;
     }
 
     @Override
