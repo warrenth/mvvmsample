@@ -31,8 +31,6 @@ public class TodoListFragment extends Fragment {
 
     private MainListAdapter mListAdapter;
 
-    //test
-
     public static TodoListFragment newInstance() {
         
         Bundle args = new Bundle();
