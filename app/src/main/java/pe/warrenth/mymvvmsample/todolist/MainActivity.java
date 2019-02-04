@@ -10,8 +10,9 @@ import pe.warrenth.mymvvmsample.ViewModelHolder;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 import pe.warrenth.mymvvmsample.data.local.TodoLocalDataSource;
 import pe.warrenth.mymvvmsample.tododetail.TodoDetailActivity;
+import pe.warrenth.mymvvmsample.todoedit.AddEditTaskActivity;
 
-public class MainActivity extends AppCompatActivity implements TodoListNavigator {
+public class MainActivity extends AppCompatActivity implements TodoListNavigator, TodoListItemNavigator {
 
     public static final String MAIN_VIEWMODEL_TAG = "MAIN_VIEWMODEL_TAG";
     private ToDoListViewModel mViewModel;
@@ -71,7 +72,12 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
     }
 
     @Override
-    public void addTodo() {
-        startActivityForResult(new Intent(this, TodoDetailActivity.class), TodoDetailActivity.REQUEST_CODE);
+    public void addNewTodo() {
+        startActivityForResult(new Intent(this, AddEditTaskActivity.class), AddEditTaskActivity.REQUEST_CODE);
+    }
+
+    @Override
+    public void openTodoDetail(String taskId) {
+
     }
 }

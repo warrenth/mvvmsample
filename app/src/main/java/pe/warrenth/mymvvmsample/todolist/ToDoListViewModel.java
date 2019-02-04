@@ -5,9 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.databinding.ObservableList;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class ToDoListViewModel extends BaseObservable {
 
     private final TodoRepository mTodoRepository;
 
-    // MainAcitivity 에서 callback 받기 위한 listener
+    // MainAcitivity 에서 callback 받기 위한 listener.
     private TodoListNavigator mNavigator;
 
     public ToDoListViewModel(TodoRepository repository, Context context) {
@@ -60,21 +58,21 @@ public class ToDoListViewModel extends BaseObservable {
     }
 
 
-    @Bindable
-    public boolean isEmpty() {
-        return items.isEmpty();
-    }
-
-
     public void addTodo() {
         if(mNavigator != null) {
-            mNavigator.addTodo();
+            mNavigator.addNewTodo();
         }
     }
 
     public void onActivityDestroyed() {
         // Clear references to avoid potential memory leaks.
         mNavigator = null;
+    }
+
+
+    @Bindable
+    public boolean isEmpty() {
+        return items.isEmpty();
     }
 
 

@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference;
 import pe.warrenth.mymvvmsample.TodoBaseViewModel;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 
-public class TodoItemViewModel extends TodoBaseViewModel {
+public class TodoListItemViewModel extends TodoBaseViewModel {
 
     TodoRepository repository;
     Context context;
@@ -16,14 +16,14 @@ public class TodoItemViewModel extends TodoBaseViewModel {
     // This navigator is s wrapped in a WeakReference to avoid leaks because it has references to an
     // activity. There's no straightforward way to clear it for each item in a list adapter.
     @Nullable
-    private WeakReference<TodoListNavigator> mNavigator;
+    private WeakReference<TodoListItemNavigator> mNavigator;
 
-    public TodoItemViewModel(TodoRepository repository, Context context) {
+    public TodoListItemViewModel(TodoRepository repository, Context context) {
         super(repository, context);
     }
 
 
-    public void setNavigator(TodoListNavigator navigator) {
+    public void setNavigator(TodoListItemNavigator navigator) {
         mNavigator = new WeakReference<>(navigator);
     }
 
@@ -34,7 +34,7 @@ public class TodoItemViewModel extends TodoBaseViewModel {
             return;
         }
         if (mNavigator != null && mNavigator.get() != null) {
-           // mNavigator.get().openTaskDetails(taskId);
+            mNavigator.get().openTodoDetail(taskId);
         }
     }
 

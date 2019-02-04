@@ -89,7 +89,7 @@ public class TodoListFragment extends Fragment {
                 new ArrayList<Task>(0),
                 TodoRepository.getInstance(TodoRemoteDataSource.getInstance()),
                 mViewModel,
-                (TodoListNavigator) getActivity());
+                (TodoListItemNavigator) getActivity());
         listView.setAdapter(mListAdapter);
     }
 
@@ -104,14 +104,14 @@ public class TodoListFragment extends Fragment {
         private final ToDoListViewModel mMainViewModel;
         private List<Task> mTasks;
         private TodoRepository mTasksRepository;
-        private TodoListNavigator mTodoListNavigator;
+        private TodoListItemNavigator mTodoListItemNavigator;
 
         public MainListAdapter(ArrayList<Task> tasks, TodoRepository repository,
-                               ToDoListViewModel viewModel, TodoListNavigator todoListNavigator) {
+                               ToDoListViewModel viewModel, TodoListItemNavigator todoListItemNavigator) {
             mTasks = tasks;
             mTasksRepository = repository;
             mMainViewModel = viewModel;
-            mTodoListNavigator = todoListNavigator;
+            mTodoListItemNavigator = todoListItemNavigator;
         }
 
         @Override
@@ -141,12 +141,12 @@ public class TodoListFragment extends Fragment {
                 binding = DataBindingUtil.getBinding(view);
             }
 
-            final TodoItemViewModel viewModel = new TodoItemViewModel(
+            final TodoListItemViewModel viewModel = new TodoListItemViewModel(
                     mTasksRepository,
                     viewGroup.getContext().getApplicationContext()
             );
 
-            viewModel.setNavigator(mTodoListNavigator);
+            viewModel.setNavigator(mTodoListItemNavigator);
 
             binding.setViewmodel(viewModel);
 
@@ -157,7 +157,7 @@ public class TodoListFragment extends Fragment {
 
         public void onDestory() {
             //interface를 null 한다.
-            mTodoListNavigator = null;
+            mTodoListItemNavigator = null;
         }
 
         public void replaceData(List<Task> items) {

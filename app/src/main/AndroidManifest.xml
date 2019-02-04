@@ -18,6 +18,8 @@
         </activity>
 
         <activity android:name=".tododetail.TodoDetailActivity"/>
+        <activity android:name=".todoedit.AddEditTaskActivity"/>
+
     </application>
 
 </manifest>

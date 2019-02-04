@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="pe.warrenth.mymvvmsample.todoedit.AddEditTaskViewModel" />
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:enabled="@{viewmodel.dataLoading}"
+        app:refreshing="@{viewmodel.dataLoading}">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE}">
+
+                <EditText
+                    android:id="@+id/add_task_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="title"
+                    android:maxLines="1"
+                    android:text="@={viewmodel.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <EditText
+                    android:id="@+id/add_task_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:gravity="top"
+                    android:hint="Enter your todo"
+                    android:text="@={viewmodel.description}" />
+
+            </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</layout>
