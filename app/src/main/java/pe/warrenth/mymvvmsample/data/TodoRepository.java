@@ -2,8 +2,6 @@ package pe.warrenth.mymvvmsample.data;
 
 import java.util.List;
 
-import pe.warrenth.mymvvmsample.Task;
-
 
 /**
  *  Clean Architecture 와 일반 Repository Pattern 차이
@@ -36,13 +34,29 @@ public class TodoRepository implements TodoDataSource {
     }
 
     @Override
-    public void getData(final LoadDataCallback callback) {
-        mTodoDataSource.getData(new LoadDataCallback() {
+    public void saveTask(Task newTask) {
+        mTodoDataSource.saveTask(newTask);
+    }
+
+    @Override
+    public void getTasks(final LoadDataCallback callback) {
+        mTodoDataSource.getTasks(new LoadDataCallback() {
             @Override
             public void onDataLoaded(List<Task> tasks) {
                 //refreshCache(tasks);
                 callback.onDataLoaded(tasks);
             }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
         });
+    }
+
+
+    @Override
+    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
+
     }
 }

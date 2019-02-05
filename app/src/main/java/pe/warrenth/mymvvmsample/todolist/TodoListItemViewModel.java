@@ -10,9 +10,6 @@ import pe.warrenth.mymvvmsample.data.TodoRepository;
 
 public class TodoListItemViewModel extends TodoBaseViewModel {
 
-    TodoRepository repository;
-    Context context;
-
     // This navigator is s wrapped in a WeakReference to avoid leaks because it has references to an
     // activity. There's no straightforward way to clear it for each item in a list adapter.
     @Nullable

@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.todolist.ToDoListViewModel;
 import pe.warrenth.mymvvmsample.todolist.TodoListFragment;
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pe.warrenth.mymvvmsample.R;
-import pe.warrenth.mymvvmsample.Task;
+import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 import pe.warrenth.mymvvmsample.data.remote.TodoRemoteDataSource;
 import pe.warrenth.mymvvmsample.databinding.FragmentTodoListBinding;

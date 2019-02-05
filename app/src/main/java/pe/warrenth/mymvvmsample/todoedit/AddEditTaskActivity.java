@@ -5,14 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import pe.warrenth.mymvvmsample.ActivityUtils;
+import pe.warrenth.mymvvmsample.AppExecutors;
 import pe.warrenth.mymvvmsample.R;
 import pe.warrenth.mymvvmsample.ViewModelHolder;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
+import pe.warrenth.mymvvmsample.data.local.TodoDatabase;
 import pe.warrenth.mymvvmsample.data.local.TodoLocalDataSource;
 
 public class AddEditTaskActivity extends AppCompatActivity implements AddEditTaskNavigator{
 
     public static final String ADD_EDIT_VIEWMODEL_TAG = "ADD_EDIT_VIEWMODEL_TAG";
+    public static final int ADD_EDIT_RESULT_OK = RESULT_FIRST_USER + 1;
+
     public static final int REQUEST_CODE = 0;
 
     private AddEditTaskViewModel mViewModel;
@@ -49,7 +53,8 @@ public class AddEditTaskActivity extends AppCompatActivity implements AddEditTas
         } else  {
             AddEditTaskViewModel viewModel = new AddEditTaskViewModel(
                     getApplicationContext(),
-                    TodoRepository.getInstance(new TodoLocalDataSource()));
+                    TodoRepository.getInstance(new TodoLocalDataSource(new AppExecutors(),
+                            TodoDatabase.getInstance(this).taskDao())));
 
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(),
@@ -81,6 +86,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements AddEditTas
 
     @Override
     public void onTaskSaved() {
-
+        setResult(ADD_EDIT_RESULT_OK);
+        finish();
     }
 }

@@ -3,17 +3,15 @@ package pe.warrenth.mymvvmsample.todoedit;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.Nullable;
 
+import java.util.List;
+
+import pe.warrenth.mymvvmsample.data.Task;
+import pe.warrenth.mymvvmsample.data.TodoDataSource;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 
-public class AddEditTaskViewModel {
-
-    private AddEditTaskNavigator mNavigator;
-
-    private final Context mContext;  // To avoid leaks, this must be an Application Context.
-
-    private final TodoRepository mTodoRepository;
-
+public class AddEditTaskViewModel implements TodoDataSource.LoadTasksCallback {
 
     public final ObservableField<String> title = new ObservableField<>();
 
@@ -21,6 +19,12 @@ public class AddEditTaskViewModel {
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
 
+    private AddEditTaskNavigator mNavigator;
+    private final Context mContext;  // To avoid leaks, this must be an Application Context.
+    private final TodoRepository mTodoRepository;
+    @Nullable
+    private String mTaskId;
+    private boolean mIsNewTask;
 
     public AddEditTaskViewModel(Context context, TodoRepository todoRepository) {
         mContext = context.getApplicationContext();
@@ -36,7 +40,48 @@ public class AddEditTaskViewModel {
         mNavigator = null;
     }
 
-    public void start(String string) {
+    public void start(String taskId) {
 
+        mTaskId = taskId;
+
+        if(taskId == null) {
+            mIsNewTask = true;
+            return;
+        }
+        mIsNewTask = false;
+        dataLoading.set(true);
+        //mTodoRepository.getTask(taskId, this);
+    }
+
+
+    @Override
+    public void onTasksLoaded(Task tasks) {
+
+    }
+
+    @Override
+    public void onDataNotAvailable() {
+
+    }
+
+    public void saveTask() {
+        if(mIsNewTask) {
+            createTask(title.get(), description.get());
+        } else  {
+            //update task
+        }
+    }
+
+    private void createTask(String title, String description) {
+        Task newTask = new Task(title, description);
+        if(newTask.isEmpty()) {
+            //empty task message
+        } else  {
+            mTodoRepository.saveTask(newTask);
+
+            if(mNavigator != null) {
+                mNavigator.onTaskSaved();
+            }
+        }
     }
 }

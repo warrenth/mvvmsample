@@ -7,10 +7,11 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 import java.util.List;
 
-import pe.warrenth.mymvvmsample.BR;
-import pe.warrenth.mymvvmsample.Task;
+import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.data.TodoDataSource;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 
@@ -46,12 +47,17 @@ public class ToDoListViewModel extends BaseObservable {
     private void loadData() {
         dataLoading.set(true);
 
-        mTodoRepository.getData(new TodoDataSource.LoadDataCallback() {
+        mTodoRepository.getTasks(new TodoDataSource.LoadDataCallback() {
             @Override
             public void onDataLoaded(List<Task> tasks) {
-
+                items.clear();
                 items.addAll(tasks);
                 notifyPropertyChanged(BR.empty);
+                dataLoading.set(false);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
                 dataLoading.set(false);
             }
         });

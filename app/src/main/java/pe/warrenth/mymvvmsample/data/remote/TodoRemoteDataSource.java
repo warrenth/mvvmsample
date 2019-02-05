@@ -1,5 +1,6 @@
 package pe.warrenth.mymvvmsample.data.remote;
 
+import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.data.TodoDataSource;
 
 public class TodoRemoteDataSource implements TodoDataSource {
@@ -14,7 +15,17 @@ public class TodoRemoteDataSource implements TodoDataSource {
     }
 
     @Override
-    public void getData(LoadDataCallback callback) {
+    public void getTasks(LoadDataCallback callback) {
+
+    }
+
+    @Override
+    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
+
+    }
+
+    @Override
+    public void saveTask(Task newTask) {
 
     }
 }

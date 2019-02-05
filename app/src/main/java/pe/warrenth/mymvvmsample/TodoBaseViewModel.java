@@ -3,25 +3,18 @@ package pe.warrenth.mymvvmsample;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.databinding.ObservableList;
 import android.support.annotation.Nullable;
 
-import java.util.List;
-
-import pe.warrenth.mymvvmsample.BR;
-import pe.warrenth.mymvvmsample.Task;
-import pe.warrenth.mymvvmsample.data.TodoDataSource;
+import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 import pe.warrenth.mymvvmsample.todolist.TodoListNavigator;
 
 public class TodoBaseViewModel extends BaseObservable {
 
-
-
     private final ObservableField<Task> mTaskObservable = new ObservableField<>();
+
+    public final ObservableField<String> title = new ObservableField<>();
 
     private Context mContext; // To avoid leaks, this must be an Application Context.
 
@@ -47,6 +40,7 @@ public class TodoBaseViewModel extends BaseObservable {
         }
         return mTaskObservable.get().getTitleForList();
     }
+
     @Nullable
     protected String getTaskId() {
         return mTaskObservable.get().getId();

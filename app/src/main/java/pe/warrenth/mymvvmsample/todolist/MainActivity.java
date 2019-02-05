@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import pe.warrenth.mymvvmsample.ActivityUtils;
+import pe.warrenth.mymvvmsample.AppExecutors;
 import pe.warrenth.mymvvmsample.R;
 import pe.warrenth.mymvvmsample.ViewModelHolder;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
+import pe.warrenth.mymvvmsample.data.local.TodoDatabase;
 import pe.warrenth.mymvvmsample.data.local.TodoLocalDataSource;
 import pe.warrenth.mymvvmsample.tododetail.TodoDetailActivity;
 import pe.warrenth.mymvvmsample.todoedit.AddEditTaskActivity;
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
             return retainedViewModel.getViewmodel();
         } else {
             ToDoListViewModel viewModel = new ToDoListViewModel(
-                    TodoRepository.getInstance(TodoLocalDataSource.getInstance()),
+                    TodoRepository.getInstance(TodoLocalDataSource.getInstance(
+                            new AppExecutors(), TodoDatabase.getInstance(this).taskDao())),
                     getApplicationContext());
 
             // Activity의 라이프사이클을 사용하기 위해 FragmentManager를 사용.
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
 
     @Override
     public void openTodoDetail(String taskId) {
-
+        Intent intent = new Intent(this, TodoDetailActivity.class);
+        intent.putExtra(TodoDetailActivity.EXTRA_TASK_ID, taskId);
+        startActivity(intent);
     }
 }
