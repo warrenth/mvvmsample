@@ -31,7 +31,7 @@ public class TodoFakeDataSource implements TodoDataSource {
 
 
     @Override
-    public void getTasks(final LoadDataCallback callback) {
+    public void getTasks(final GetTasksCallback callback) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -39,20 +39,16 @@ public class TodoFakeDataSource implements TodoDataSource {
                 TASKS_SERVICE_DATA.put("1", new Task("1","타이틀03", ""));
                 TASKS_SERVICE_DATA.put("2", new Task("2","타이틀03", ""));
 
-                callback.onDataLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
+                callback.onTasksLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
             }
         },1500);
     }
 
     @Override
-    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+    public void getTask(String taskId, GetTaskCallback getTaskCallback) {
 
-            }
-        };
     }
+
 
     @Override
     public void saveTask(final Task newTask) {

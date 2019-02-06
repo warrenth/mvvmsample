@@ -15,14 +15,15 @@ public class TodoRemoteDataSource implements TodoDataSource {
     }
 
     @Override
-    public void getTasks(LoadDataCallback callback) {
+    public void getTasks(GetTasksCallback callback) {
 
     }
 
     @Override
-    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
+    public void getTask(String taskId, GetTaskCallback getTaskCallback) {
 
     }
+
 
     @Override
     public void saveTask(Task newTask) {

@@ -47,9 +47,9 @@ public class ToDoListViewModel extends BaseObservable {
     private void loadData() {
         dataLoading.set(true);
 
-        mTodoRepository.getTasks(new TodoDataSource.LoadDataCallback() {
+        mTodoRepository.getTasks(new TodoDataSource.GetTasksCallback() {
             @Override
-            public void onDataLoaded(List<Task> tasks) {
+            public void onTasksLoaded(List<Task> tasks) {
                 items.clear();
                 items.addAll(tasks);
                 notifyPropertyChanged(BR.empty);

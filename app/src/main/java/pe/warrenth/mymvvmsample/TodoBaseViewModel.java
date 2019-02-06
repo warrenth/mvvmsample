@@ -3,33 +3,41 @@ package pe.warrenth.mymvvmsample;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.support.annotation.Nullable;
 
 import pe.warrenth.mymvvmsample.data.Task;
+import pe.warrenth.mymvvmsample.data.TodoDataSource;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
-import pe.warrenth.mymvvmsample.todolist.TodoListNavigator;
 
-public class TodoBaseViewModel extends BaseObservable {
+public class TodoBaseViewModel extends BaseObservable implements TodoDataSource.GetTaskCallback {
 
     private final ObservableField<Task> mTaskObservable = new ObservableField<>();
 
     public final ObservableField<String> title = new ObservableField<>();
 
+    public final ObservableField<String> description = new ObservableField<>();
+
     private Context mContext; // To avoid leaks, this must be an Application Context.
 
     private final TodoRepository mTodoRepository;
 
-    // MainAcitivity 에서 callback 받기 위한 listener
-    private TodoListNavigator mNavigator;
-
     public TodoBaseViewModel(TodoRepository repository, Context context) {
         mContext = context.getApplicationContext(); // Force use of Application Context.
         mTodoRepository = repository;
-    }
 
-    public void setNavigator(TodoListNavigator navigator) {
-        mNavigator = navigator;
+        // Exposed observables depend on the mTaskObservable observable:
+        mTaskObservable.addOnPropertyChangedCallback(new OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                Task task = mTaskObservable.get();
+                if (task != null) {
+                    title.set(task.getTitle());
+                    description.set(task.getDescription());
+                }
+            }
+        });
     }
 
     // This could be an observable, but we save a call to Task.getTitleForList() if not needed.
@@ -50,4 +58,20 @@ public class TodoBaseViewModel extends BaseObservable {
         mTaskObservable.set(task);
     }
 
+    public void start(String taskId) {
+        if(taskId != null) {
+            mTodoRepository.getTask(taskId, this);
+        }
+    }
+
+    @Override
+    public void onTaskLoaded(Task task) {
+        mTaskObservable.set(task);
+        notifyChange(); // For the @Bindable properties
+    }
+
+    @Override
+    public void onDataNotAvailable() {
+
+    }
 }

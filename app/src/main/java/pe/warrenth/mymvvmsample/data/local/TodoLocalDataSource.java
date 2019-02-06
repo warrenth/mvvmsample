@@ -1,13 +1,8 @@
 package pe.warrenth.mymvvmsample.data.local;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 
-import com.google.common.collect.Lists;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import pe.warrenth.mymvvmsample.AppExecutors;
 import pe.warrenth.mymvvmsample.data.Task;
@@ -37,7 +32,7 @@ public class TodoLocalDataSource implements TodoDataSource {
 
 
     @Override
-    public void getTasks(final LoadDataCallback callback) {
+    public void getTasks(final GetTasksCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -49,7 +44,7 @@ public class TodoLocalDataSource implements TodoDataSource {
                             // This will be called if the table is new or just empty.
                             callback.onDataNotAvailable();
                         } else  {
-                            callback.onDataLoaded(tasks);
+                            callback.onTasksLoaded(tasks);
                         }
                     }
                 });
@@ -59,14 +54,26 @@ public class TodoLocalDataSource implements TodoDataSource {
     }
 
     @Override
-    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
+    public void getTask(final String taskId, final GetTaskCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-
+                final Task task = mTasksDao.getTaskById(taskId);
+                mAppExecutors.mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (task != null) {
+                            callback.onTaskLoaded(task);
+                        } else {
+                            callback.onDataNotAvailable();
+                        }
+                    }
+                });
             }
         };
+        mAppExecutors.diskIO().execute(runnable);
     }
+
 
     @Override
     public void saveTask(final Task newTask) {

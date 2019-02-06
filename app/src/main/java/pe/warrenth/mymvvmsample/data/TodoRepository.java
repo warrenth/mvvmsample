@@ -39,12 +39,12 @@ public class TodoRepository implements TodoDataSource {
     }
 
     @Override
-    public void getTasks(final LoadDataCallback callback) {
-        mTodoDataSource.getTasks(new LoadDataCallback() {
+    public void getTasks(final GetTasksCallback callback) {
+        mTodoDataSource.getTasks(new GetTasksCallback() {
             @Override
-            public void onDataLoaded(List<Task> tasks) {
+            public void onTasksLoaded(List<Task> tasks) {
                 //refreshCache(tasks);
-                callback.onDataLoaded(tasks);
+                callback.onTasksLoaded(tasks);
             }
 
             @Override
@@ -56,7 +56,17 @@ public class TodoRepository implements TodoDataSource {
 
 
     @Override
-    public void getTask(String taskId, LoadDataCallback loadDataCallback) {
+    public void getTask(String taskId, final GetTaskCallback callback) {
+        mTodoDataSource.getTask(taskId, new GetTaskCallback() {
+            @Override
+            public void onTaskLoaded(Task task) {
+                callback.onTaskLoaded(task);
+            }
 
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
     }
 }
