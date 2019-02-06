@@ -1,4 +1,4 @@
-#MVVM DataBinding
+#MVVM DataBinding, ROOM 테스트
 ============
 
 ViewModel은 UI를 업데이트하기 위해 XML 에 직접 액세스 할 수 없으므로, 
@@ -36,7 +36,7 @@ ListView, items의 매개변수를 받아 Adapter 에 set 시킨다.
 
 
 
-> ##### ObservableField<Task> 와 addOnPropertyChangedCallback 를 이용해서 title, description을 업데이트 하는 방법 
+ ##### ObservableField<Task> 와 addOnPropertyChangedCallback 를 이용해서 title, description을 업데이트 하는 방법 
 void addOnPropertyChangedCallback (Observable.OnPropertyChangedCallback callback)
 <pre><code>
 private final ObservableField<Task> mTaskObservable = new ObservableField<>();
