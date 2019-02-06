@@ -25,7 +25,7 @@ import pe.warrenth.mymvvmsample.databinding.TodoListItemBinding;
 
 public class TodoListFragment extends Fragment {
 
-    private ToDoListViewModel mViewModel;
+    private TodoListViewModel mViewModel;
 
     private FragmentTodoListBinding mFragmentTodoBinding;
 
@@ -40,7 +40,7 @@ public class TodoListFragment extends Fragment {
         return fragment;
     }
 
-    public void setViewModel(ToDoListViewModel viewModel) {
+    public void setViewModel(TodoListViewModel viewModel) {
         mViewModel = viewModel;
     }
 
@@ -101,13 +101,13 @@ public class TodoListFragment extends Fragment {
 
     public static class MainListAdapter extends BaseAdapter {
 
-        private final ToDoListViewModel mMainViewModel;
+        private final TodoListViewModel mMainViewModel;
         private List<Task> mTasks;
         private TodoRepository mTasksRepository;
         private TodoListItemNavigator mTodoListItemNavigator;
 
         public MainListAdapter(ArrayList<Task> tasks, TodoRepository repository,
-                               ToDoListViewModel viewModel, TodoListItemNavigator todoListItemNavigator) {
+                               TodoListViewModel viewModel, TodoListItemNavigator todoListItemNavigator) {
             mTasks = tasks;
             mTasksRepository = repository;
             mMainViewModel = viewModel;

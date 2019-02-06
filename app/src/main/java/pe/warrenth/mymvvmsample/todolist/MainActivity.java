@@ -17,7 +17,7 @@ import pe.warrenth.mymvvmsample.todoedit.AddEditTaskActivity;
 public class MainActivity extends AppCompatActivity implements TodoListNavigator, TodoListItemNavigator {
 
     public static final String MAIN_VIEWMODEL_TAG = "MAIN_VIEWMODEL_TAG";
-    private ToDoListViewModel mViewModel;
+    private TodoListViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity implements TodoListNavigator
         todoListFragment.setViewModel(mViewModel);
     }
 
-    private ToDoListViewModel findOrCreateViewModel() {
-        ViewModelHolder<ToDoListViewModel> retainedViewModel =
-                (ViewModelHolder<ToDoListViewModel>) getSupportFragmentManager().findFragmentByTag(MAIN_VIEWMODEL_TAG);
+    private TodoListViewModel findOrCreateViewModel() {
+        ViewModelHolder<TodoListViewModel> retainedViewModel =
+                (ViewModelHolder<TodoListViewModel>) getSupportFragmentManager().findFragmentByTag(MAIN_VIEWMODEL_TAG);
 
         if(retainedViewModel != null && retainedViewModel.getView() != null) {
             return retainedViewModel.getViewmodel();
         } else {
-            ToDoListViewModel viewModel = new ToDoListViewModel(
+            TodoListViewModel viewModel = new TodoListViewModel(
                     TodoRepository.getInstance(TodoLocalDataSource.getInstance(
                             new AppExecutors(), TodoDatabase.getInstance(this).taskDao())),
                     getApplicationContext());

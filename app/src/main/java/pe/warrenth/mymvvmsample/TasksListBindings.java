@@ -7,7 +7,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import pe.warrenth.mymvvmsample.data.Task;
-import pe.warrenth.mymvvmsample.todolist.ToDoListViewModel;
+import pe.warrenth.mymvvmsample.todolist.TodoListViewModel;
 import pe.warrenth.mymvvmsample.todolist.TodoListFragment;
 
 public class TasksListBindings {
@@ -22,7 +22,7 @@ public class TasksListBindings {
     }
 
     @BindingAdapter("android:onRefresh")
-    public static void setRefreshLayout(SwipeRefreshLayout view, final ToDoListViewModel viewModel) {
+    public static void setRefreshLayout(SwipeRefreshLayout view, final TodoListViewModel viewModel) {
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

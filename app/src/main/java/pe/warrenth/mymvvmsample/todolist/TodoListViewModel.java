@@ -15,7 +15,7 @@ import pe.warrenth.mymvvmsample.data.Task;
 import pe.warrenth.mymvvmsample.data.TodoDataSource;
 import pe.warrenth.mymvvmsample.data.TodoRepository;
 
-public class ToDoListViewModel extends BaseObservable {
+public class TodoListViewModel extends BaseObservable {
 
     //XML 과 바인딩되어있는 객체들이다.
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);  // swipeRefreshLayout의 refreshing와 연결.
@@ -30,7 +30,7 @@ public class ToDoListViewModel extends BaseObservable {
     // MainAcitivity 에서 callback 받기 위한 listener.
     private TodoListNavigator mNavigator;
 
-    public ToDoListViewModel(TodoRepository repository, Context context) {
+    public TodoListViewModel(TodoRepository repository, Context context) {
         mContext = context.getApplicationContext(); // Force use of Application Context.
         mTodoRepository = repository;
     }

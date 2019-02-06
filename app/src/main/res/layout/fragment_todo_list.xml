@@ -12,7 +12,7 @@
 
         <variable
             name="viewmodel"
-            type="pe.warrenth.mymvvmsample.todolist.ToDoListViewModel" />
+            type="pe.warrenth.mymvvmsample.todolist.TodoListViewModel" />
 
     </data>
 
